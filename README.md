@@ -31,7 +31,7 @@ Generates cylindrical samples and ring-like samples, as well as related quatitie
 For a ring-like sample, use `ringGen(piSeg)` where piSeg is an integer, the number of slices in <img src="https://render.githubusercontent.com/render/math?math=\phi">.
 
 ## Examples
-To run these examples, one neads the Python Optimal Transport Library (https://pot.readthedocs.io/en/stable/) and HEALPix (https://astropy-healpix.readthedocs.io/en/latest/) for spherical Geometries
+To run these examples, one neads the Python Optimal Transport Library (https://pot.readthedocs.io/en/stable/) and HEALPix (https://astropy-healpix.readthedocs.io/en/latest/) for spherical geometries.
 
 ### `evIsoSphereTest.py` file i
 
