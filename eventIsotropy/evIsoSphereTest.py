@@ -24,8 +24,8 @@ from prettytable import PrettyTable
 
 ############################################
 ## Specify input file
-if len(sys.argv)<2:
-    print 'Error: user did not specify input file'
+if len(sys.argv)<3:
+    print 'Error: user did not specify input file and sphere index'
     sys.exit(2)
 
 ## Generate spherical sample
@@ -34,6 +34,9 @@ sphereEng = np.array([engFromVec(sphereSample[j]) for j in range(5)])
 
 ## Choose sphere n points
 sphInd = int(sys.argv[2])
+if sphInd>5:
+    print 'Warning! You are generating a sphere with'+str(12*(4**sphInd))+' particles. This is an extremely long calculation time'
+
 spherePoints1 = sphereSample[sphInd]
 sphereEng1 = sphereEng[sphInd]
 

@@ -6,7 +6,7 @@
 ## Should be close to zero for n large
 ##
 ## Note that event isotropy of a dijet with a cylinder occurs when the 
-## phi values are opposite but the eta values are equal
+## phi values are opposite but the y values are equal
 #############################
 import sys
 import time
@@ -24,12 +24,13 @@ rc('text', usetex=True)
 from prettytable import PrettyTable
 
 ##############################
+# Generate cylinders and pT lists
 
-# G enerate cylinders and pT lists
-etaMax=2
-nList=[4,8,16,32,64,128]
+yMax=2
 
-cylSample = np.array([cylinderGen(nList[i],etaMax) for i in range(5)])
+nList=[4,8,16,32,64]
+
+cylSample = np.array([cylinderGen(nList[i],yMax) for i in range(5)])
 cylPtSample=np.array([np.full(len(cylSample[i]), 1.) for i in range(5)]) 
 
 numPart = np.array([len(cylPtSample[i]) for i in range(5)])
@@ -42,9 +43,9 @@ cylPT1 = cylPtSample[2]
 NPENCIL = 100000
 pencilPoint= []
 for num in range(NPENCIL):
-    etaVal = etaMax
+    yVal = yMax
     phiVal = np.pi*random.random()
-    penEvent=np.array([[etaVal,phiVal],[etaVal,np.pi+phiVal]])
+    penEvent=np.array([[yVal,phiVal],[yVal,np.pi+phiVal]])
     pencilPoint.append(penEvent)
 numPencil=2
 pencilPt = np.full(numPencil, np.float(1./numPencil))
@@ -57,7 +58,7 @@ for i in range(5):
     # CALC EMD FOR ALL PENCIL-LIKE
     emdSpec=[]
     for event in pencilPoint:
-        M = _cdist_phi_y(cylPoints1,event, etaMax)        
+        M = _cdist_phi_y(cylPoints1,event, yMax)        
         emdval = emd_Calc(cylPT1, pencilPt, M)
         emdSpec.append(emdval)
     filename="emdSpec"+str(len(cylPoints1))+"_CylJetMax.dat"

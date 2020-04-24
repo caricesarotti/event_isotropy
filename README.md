@@ -39,5 +39,10 @@ Calculates the spherical event isotropy of an uploaded event. User specifies `fi
 
 ### `evIsoCylTest.py`  
 
+Calculates the cylindrical event isotropy of very coarse to very finely gridded cylinders for random extremal transverse dijet configurations. In the limit of large `n`, we expect to see the event isotropy drop to zero. No user input needd. 
+
+### `evIsoRingTest.py`
+
+Calculates the ring isotropy between two rings at random orientations and with potentially different particle number. 
 
 
