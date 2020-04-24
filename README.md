@@ -14,7 +14,7 @@ For the spherical case, one can calculate the <img src="https://render.githubuse
 
 For the cylindrical case, one can calculate the squared Euclidean distance in <img src="https://render.githubusercontent.com/render/math?math=y-\phi"> space (`_cdist_phi_y(X,Y,ymax)`) or the unnormalized Euclidean distance in <img src="https://render.githubusercontent.com/render/math?math=y-\phi"> (`_cdist_phi_y_sqrt(X,Y)`) space. Pass these functions arrays of the position in <img src="https://render.githubusercontent.com/render/math?math=(y,\phi)"> space and the maximum value of `y` ymax. 
 
-For the ring case, one can calculate the distance in <img src="https://render.githubusercontent.com/render/math?math=\phi"> (`_cdist_phi(X,Y)`) and <img src="https://render.githubusercontent.com/render/math?math=1-\cos\phi"> (`_cdist_phicos(X,Y)`). Pass the function the arrays of `phi` values X, Y.
+For the ring case, one can calculate the distance in <img src="https://render.githubusercontent.com/render/math?math=\phi"> (`_cdist_phi(X,Y)`) and <img src="https://render.githubusercontent.com/render/math?math=1-\cos\phi"> (`_cdist_phicos(X,Y)`). Pass the function the arrays of <img src="https://render.githubusercontent.com/render/math?math=\phi"> values X, Y.
 
 ### Event Isotropy Calculation
 To calcuate the event isotropy, use the function `emd_Calc(ev0,ev1,M)` where ev0, ev1 are the energy weights of the event and the uniform event, and M is the distance matrix between them as computed by one of the previous functions. 
@@ -22,7 +22,7 @@ Note, this function will also accept user defined distance matrices of the corre
 
 - spherGen.py
 
-Generates spherical samples and some related quantites. To generate a spherical quasi-uniform event with `n = 12 x 2^{2i}` particles, `use sphericalGen(i)`  
+Generates spherical samples and some related quantites. To generate a spherical quasi-uniform event with <img src="https://render.githubusercontent.com/render/math?math=n=12\times2^{2i}"> particles for <img src="https://render.githubusercontent.com/render/math?math=i\in\mathbb{Z}">, use `sphericalGen(i)`  
 
 ## Examples
 To run these examples, one neads the Python Optimal Transport Library (https://pot.readthedocs.io/en/stable/) and HEALPix (https://astropy-healpix.readthedocs.io/en/latest/)
