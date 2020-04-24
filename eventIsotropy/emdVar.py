@@ -71,8 +71,9 @@ def wrapCheck(x):
 ## CYLINDRICAL GEOMETRY     
 ####################################### 
 
-# Calculates euclidean distance where the first column is eta, the second is phi         
-# This is the distance on the cylinder, beta = 2 measure                                                                                                                                               
+# Calculates euclidean distance where the first column is eta, the second is phi, eg elements in both X and Y are (y,phi)
+# This is the distance on the cylinder, beta = 2 measure                                                                                                                           
+# ym is max rapidity, needed for correct normalization
 def _cdist_phi_y(X,Y, ym):
     # define ym as the maximum rapidity cut on the quasi-isotropic event
     # Make sure the phi values are in range                                                                                                                                          
@@ -86,6 +87,7 @@ def _cdist_phi_y(X,Y, ym):
     return dist
 
 # Distance on cylinder, beta = 1 metric 
+# first column is eta, the second is phi, eg elements in both X and Y are (y,phi) 
 def _cdist_phi_y_sqrt(X,Y):
     # NOTE: THIS IS NOT NORMALIZED!! DOES NOT RUN FROM 0 TO 1
     # Make sure the phi values are in range                                                                   
@@ -97,16 +99,19 @@ def _cdist_phi_y_sqrt(X,Y):
     dist = phi_d**2 + y_d**2
     return np.sqrt(dist)
 
-#######################################                                                                                                                                                                                                                         ## RING-LIKE GEOMETRY           
+#######################################                                           
+## RING LIKE GEOMETRY
 ####################################### 
-# Calculates distance on ring, theta metric
+# Calculates distance on ring, phi metric
+# X, Y are arrays of phi
 def _cdist_phi(X,Y):
     phi1 = preproc(X)
     phi2 = preproc(Y)
     phi_d =np.pi -np.abs(np.pi-np.abs(phi1[:,np.newaxis] - phi2[:])) # GIVES MATRIX OF DIFFERENCE OF PHI VALUES  
     return (4/np.pi)*phi_d
 
-# Calculates distance on ring, cos theta measure                                                                                                                                                     
+# Calculates distance on ring, cos phi measure
+# X, Y are arrays of phi                                                                                                                                                     
 def _cdist_phicos(X,Y):
     phi1 = preproc(X)
     phi2 = preproc(Y)
@@ -117,16 +122,19 @@ def _cdist_phicos(X,Y):
 ## SPHERICAL GEOMETRY
 #######################################
 # Calculates the distance on the sphere, angluar distance                                         
+# X, Y are arrays of 3 momenta of the particles in the event
 def _cdist_sphere(X,Y):
     theta_d=np.array([[np.arccos(np.around(np.dot(X[i],Y[j]), decimals=5)/np.around(LA.norm(Y[j])*LA.norm(X[i]),decimals=5)) for j in range(len(Y))] for i in range(len(X))])
     return theta_d
 
 # Calculates disntace on sphere, cos distance
+# X, Y are arrays of 3 momenta of the particles in the event
 def _cdist_cos(X,Y):
     cos_d=np.array([[2*(1-np.around(np.dot(X[i],Y[j]), decimals=5)/np.around(LA.norm(Y[j])*LA.norm(X[i]),decimals=5)) for j in range(len(Y))] for i in range(len(X))])
     return cos_d
 
 # Distance on sphere, sqrt cos distance
+# X, Y are arrays of 3 momenta of the particles in the event
 def _cdist_sqrt_cos(X,Y):
     cos_d=np.array([[(3./2.)*np.sqrt(1-np.around(np.dot(X[i],Y[j]), decimals=5)/np.around(LA.norm(Y[j])*LA.norm(X[i]),decimals=5)) for j in range(len(Y))] for i in range(len(X))])
     return cos_d

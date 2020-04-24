@@ -26,11 +26,12 @@ def pT(px, py):
 #
 ######################################
 #
+## Return the points of a uniformly grided cylinder in eta - phi space. Phi goes from 0 to 2 pi,                                                    
+## Eta goes from -etaMax to etaMax                                                                                                                  
+## piSeg is how many slices you want in the phi direction, must be integer
+## Returns points on the cylinder with roughly equal gridding on the z axis 
 def cylinderGen(piSeg, etaMax):
-    ## Return the points of a uniformly grided cylinder in eta - phi space. Phi goes from 0 to 2 pi,
-    ## Eta goes from -etaMax to etaMax                                                                                                                                                  
-    ## piSeg is how many slices you want in the phi direction.                                                                                                                                       
-    ## Returns points on the cylinder with roughly equal gridding on the z axis                                                                                                                             
+
     flag = False
     # Check that piSeg is a positive integer                                                                                                                                                
     if float(piSeg).is_integer():
@@ -124,6 +125,7 @@ def ringGen(piSeg):
 #################################                  
 
 #### Defines just a ring of particles                                                                                                                                          
+## piSeg is an integer
 def ringGenShift(piSeg):
    ## Return the points of a uniformly grided ring                                                                                                                             
     flag = False
