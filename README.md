@@ -1,7 +1,7 @@
 # Event Isotropy
 ### A Robust Measure of Event Isotropy at Colliders (https://arxiv.org/abs/2004.06125)
 ### C. Cesarotti and J. Thaler
-Repository reated December 2019 by Cari Cesarotti (ccesarotti@g.harvard.edu) <img src="https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1">
+Repository reated December 2019 by Cari Cesarotti (ccesarotti@g.harvard.edu)
 
 ## Event Isotropy Code
 To run this code, one neads the Python Optimal Transport Library (https://pot.readthedocs.io/en/stable/)
@@ -10,9 +10,9 @@ To run this code, one neads the Python Optimal Transport Library (https://pot.re
 This is the file with the functions to calcuate the distances between sets for several distance measures as well as the event isotropy. 
 
 ### Geometries
-For the spherical case, one can calculate the `1-\cos\theta` measure (`_cdist_cos(X,Y)`) or the `\sqrt{1 - \cos \theta}` measure (`_cdist_sqrt_cos(X,Y)`). To calculate, pass these functions arrays X, Y of the 3 momenta of each set. 
+For the spherical case, one can calculate the <img src="https://render.githubusercontent.com/render/math?math=1-\cos\theta"> measure (`_cdist_cos(X,Y)`) or the <img src="https://render.githubusercontent.com/render/math?math=\sqrt{1-\cos\theta}"> measure (`_cdist_sqrt_cos(X,Y)`). To calculate, pass these functions arrays X, Y of the 3 momenta of each set. 
 
-For the cylindrical case, one can calculate the squared Euclidean distance in `y-\phi` space (`_cdist_phi_y(X,Y,ymax)`) or the unnormalized Euclidean distance in `y-\phi` (`_cdist_phi_y_sqrt(X,Y)`) space. Pass these functions arrays of the position in (`y, phi`) space and the maximum value of `y` ymax. 
+For the cylindrical case, one can calculate the squared Euclidean distance in `<img src="https://render.githubusercontent.com/render/math?math=y-\phi">` space (`_cdist_phi_y(X,Y,ymax)`) or the unnormalized Euclidean distance in `y-\phi` (`_cdist_phi_y_sqrt(X,Y)`) space. Pass these functions arrays of the position in (`y, phi`) space and the maximum value of `y` ymax. 
 
 For the ring case, one can calculate the distance in `phi` (`_cdist_phi(X,Y)`) and `1-\cos\phi` (`_cdist_phicos(X,Y)`). Pass the function the arrays of `phi` values X, Y.
 
