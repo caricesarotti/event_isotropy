@@ -33,8 +33,9 @@ sphereSample = np.array([sphericalGen(i) for i in range(5)])
 sphereEng = np.array([engFromVec(sphereSample[j]) for j in range(5)])
 
 ## Choose sphere n points
-spherePoints1 = sphereSample[2]
-sphereEng1 = sphereEng[2]
+sphInd = int(sys.argv[2])
+spherePoints1 = sphereSample[sphInd]
+sphereEng1 = sphereEng[sphInd]
 
 fileName=sys.argv[1]
 
