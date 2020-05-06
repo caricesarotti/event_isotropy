@@ -135,8 +135,8 @@ def ringGenShift(piSeg):
 
     if flag:
         # First, calculate the fraction of the points that is along the phi direction                                            
-        # randShift = random.uniform(0,2*np.pi/piSeg)
-        randShift = 0. # Don't need random shift for collider events, already random. Just for testing. 
+        randShift = random.uniform(0,2*np.pi/piSeg)
+        #randShift = 0. # Don't need random shift for collider events, already random. Just for testing. 
         phiVals = [2*np.pi*j/piSeg+randShift for j in range(piSeg)]
         return np.array(phiVals)
 
