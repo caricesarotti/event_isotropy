@@ -1,7 +1,7 @@
 # Event Isotropy
 ### A Robust Measure of Event Isotropy at Colliders (https://arxiv.org/abs/2004.06125)
 ### C. Cesarotti and J. Thaler
-Repository reated December 2019 by Cari Cesarotti (ccesarotti@g.harvard.edu)
+Repository created December 2019 by Cari Cesarotti (ccesarotti@g.harvard.edu)
 
 ## Event Isotropy Code
 To run this code, one neads the Python Optimal Transport Library (https://pot.readthedocs.io/en/stable/)
