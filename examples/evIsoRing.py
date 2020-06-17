@@ -1,6 +1,6 @@
-## Created by C. Cesarotti (ccesarotti@g.harvard.edu) 04/2019                                                                                                   
-## Last updated: 04/24/20                                            
-## 
+## Created by C. Cesarotti (ccesarotti@g.harvard.edu) 04/2019
+## Last updated: 04/24/20
+##
 ## Calculates the event isotropy for ring configurations with
 ## random orientations.
 ##
@@ -13,8 +13,8 @@ import numpy as np
 import matplotlib.pylab as plt
 import random
 
-from cylGen import ringGen, ringGenShift
-from emdVar import _cdist_phicos, emd_Calc
+from eventIsotropy.cylGen import ringGen, ringGenShift
+from eventIsotropy.emdVar import _cdist_phicos, emd_Calc
 
 from matplotlib import rc
 from mpl_toolkits.mplot3d import Axes3D
@@ -34,7 +34,7 @@ for i in range(5):
     ringPT1 = ringPtSample[i]
     for j in range(5):
         emdSpec=[]
-        # SET THE SECOND EVENT WITH j 
+        # SET THE SECOND EVENT WITH j
         ringPT2 = ringPtSample[j]
         for num in range(1000):
             ringPoints2 = ringGenShift(nList[j]) # The shift just randomly orients the ring, doesn't change particle spacing
@@ -45,9 +45,3 @@ for i in range(5):
         for emdVal in emdSpec:
             f.write(str(emdVal)+ ' ')
         f.close()
-
-
-
-
-
-
