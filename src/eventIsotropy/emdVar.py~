@@ -1,6 +1,6 @@
 #
 # Created by C. Cesarotti (ccesarotti@g.harvard.edu) 04/2019
-# Last updated: 06/22
+# Last updated: 04/16/20
 # 
 # Contains code to calculate distance matrices for spherical, 
 # ring like, and cylindrical geometries. 
@@ -74,7 +74,7 @@ def wrapCheck(x):
 # Calculates euclidean distance where the first column is eta, the second is phi, eg elements in both X and Y are (y,phi)
 # This is the distance on the cylinder, beta = 2 measure                                                                                                                           
 # ym is max rapidity, needed for correct normalization
-def _cdist_phi_y(X,Y,ym):
+def _cdist_phi_y(X,Y, ym):
     # define ym as the maximum rapidity cut on the quasi-isotropic event
     # Make sure the phi values are in range                                                                                                                                          
     phi1 = preproc(X[:,1])
@@ -121,7 +121,7 @@ def _cdist_phicos(X,Y):
 #######################################
 ## SPHERICAL GEOMETRY
 #######################################
-# Calculates the distance on the sphere, angular distance                                         
+# Calculates the distance on the sphere, angluar distance                                         
 # X, Y are arrays of 3 momenta of the particles in the event
 def _cdist_sphere(X,Y):
     theta_d=np.array([[np.arccos(np.around(np.dot(X[i],Y[j]), decimals=5)/np.around(LA.norm(Y[j])*LA.norm(X[i]),decimals=5)) for j in range(len(Y))] for i in range(len(X))])
@@ -158,5 +158,5 @@ def emd_Calc(ev0,ev1,M,maxIter=1000000):
     # Should only return 0 when two events are identical. If returning 0 otherwise, problems in config
     if cost==0:
         print(log['warning'])
-    # returns the EMD between normalized events (e.g. multiply by event pT, eng, etc. to get dimensional value)                                                                      
+    # returns the normalized EMD between events (e.g. multiply by event pT, eng, etc. to get dimensional value)                                                                      
     return cost
