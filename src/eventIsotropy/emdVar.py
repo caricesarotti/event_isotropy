@@ -62,6 +62,26 @@ def wrapCheck(x):
         return wrapCheck(x-2*np.pi)
     return x
 
+## TO IMPLEMENT: JET CENTERING
+
+# Jet EMD calculation
+# First, define jet template
+
+def jet_temp(rVal,numPart):
+    # Define a template uniform jet with a radius in eta-phi plane as rVal, with roughly numPart particles inside                                                                                                                        
+    points=[]
+    nSides = np.ceil(np.sqrt(4*numPart/np.pi))
+    space = 2*rVal/(nSides-1)
+    for i in range(nSides):
+        phiVal = -1*rVal + i*space
+        for j in range(nSides):
+            etaVal = -1*rVal + j*space
+            if etaVal**2 + phiVal**2 <= rVal**2:
+                points.append([etaVal, phiVal])
+
+    print (points.len())
+    return points
+
 
 ##########################################################################
 # Define distance metrics.                                                                                                                                                 
@@ -118,6 +138,13 @@ def _cdist_phicos(X,Y):
     phi_d =np.pi -np.abs(np.pi-np.abs(phi1[:,np.newaxis] - phi2[:])) # GIVES MATRIX OF DIFFERENCE OF PHI VALUES       
     return (np.pi/(np.pi-2))*(1-np.cos(phi_d))
 
+# Returns an unnormalized distance metric
+def _cdist_ring(X,Y,beta):
+    phi1 = preproc(X)
+    phi2 = preproc(Y)
+    phi_d = np.pi -np.abs(np.pi-np.abs(phi1[:,np.newaxis] - phi2[:])) # GIVES MATRIX OF DIFFERENCE OF PHI VALUES
+    return (1-np.cos(phi_d))**(beta/2.)
+
 #######################################
 ## SPHERICAL GEOMETRY
 #######################################
@@ -136,10 +163,15 @@ def _cdist_cos(X,Y):
 # Distance on sphere, sqrt cos distance
 # X, Y are arrays of 3 momenta of the particles in the event
 def _cdist_sqrt_cos(X,Y):
-    cos_d=np.array([[(3./2.)*np.sqrt(1-np.around(np.dot(X[i],Y[j]), decimals=5)/np.around(LA.norm(Y[j])*LA.norm(X[i]),decimals=5)) for j in range(len(Y))] for i in range(len(X))])
-    return cos_d
+    cos_sq=np.array([[(3./2.)*np.sqrt(1-np.around(np.dot(X[i],Y[j]), decimals=5)/np.around(LA.norm(Y[j])*LA.norm(X[i]),decimals=5)) for j in range(len(Y))] for i in range(len(X))])
+    return cos_sq
 
-
+# Distance on sphere, used defined beta
+# unnormalized
+# X, Y are arrays of 3 momenta of the particles in the event
+def _cdist_sphere(X,Y,beta):
+    dist_cos=np.array([[(1-np.around(np.dot(X[i],Y[j]), decimals=5)/np.around(LA.norm(Y[j])*LA.norm(X[i]),decimals=5))**(beta/2.) for j in range(len(Y))] for i in range(len(X))])
+    return dist_cos
                      
 ######################################
 # EMD CALCULATION                                                                                                                                                                    
@@ -155,8 +187,33 @@ def emd_Calc(ev0,ev1,M,maxIter=1000000):
     ev1norm = ev1[:]/ev1[:].sum()
 
     cost, log = emd2(ev0norm, ev1norm, M, numItermax=100000000,log=True)
+
     # Should only return 0 when two events are identical. If returning 0 otherwise, problems in config
     if cost==0:
         print(log['warning'])
-    # returns the EMD between normalized events (e.g. multiply by event pT, eng, etc. to get dimensional value)                                                                      
+
+    #returns the EMD between normalized events (e.g. multiply by event pT, eng, etc. to get dimensional value) 
     return cost
+
+# EMD CALCULATION
+# Includes matrix of flow between particles
+# CARI COME BACK HERE!!
+def emd_Calc_Flow(ev0,ev1,M,maxIter=1000000):
+    # NORMALIZE IF NOT NORMALIZED                                                                                                                                                                                                            
+    ev0norm = ev0[:]/ev0[:].sum()
+    ev1norm = ev1[:]/ev1[:].sum()
+
+    cost, log, flow = emd2(ev0norm, ev1norm, M, numItermax=100000000,log=True, return_matrix=True)
+    
+    # Should only return 0 when two events are identical. If returning 0 otherwise, problems in config                                                                                                                                       
+    if cost==0:
+        print(log['warning'])
+
+    # returns the EMD between normalized events (e.g. multiply by event pT, eng, etc. to get dimensional value)                                                                                                                              
+    return cost, flow
+    
+########################################
+# EMD Visualization
+#######################################
+
+
