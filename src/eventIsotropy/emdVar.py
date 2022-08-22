@@ -119,6 +119,18 @@ def _cdist_phi_y_sqrt(X,Y):
     dist = phi_d**2 + y_d**2
     return np.sqrt(dist)
 
+# Generic distance on cylinder. Assuming distance is of the form (\delta phi^2 + \delta y^2)^\beta/2
+# User specifies eta, phi, then also beta
+# Note that it's not normalized
+def _cdist_cyl(X,Y,beta):
+    phi1 = preproc(X[:,1])
+    phi2 = preproc(Y[:,1])
+    # Trick to account for phi distance periodicity                                                                              
+    phi_d =np.pi -np.abs(np.pi-np.abs(phi1[:,np.newaxis] - phi2[:])) #newaxis used like this turns it into a column
+    y_d = X[:,0,np.newaxis] - Y[:,0]
+    dist = (phi_d**2 + y_d**2)**(beta/2.)
+    return dist
+
 #######################################                                           
 ## RING LIKE GEOMETRY
 ####################################### 
@@ -138,6 +150,8 @@ def _cdist_phicos(X,Y):
     phi_d =np.pi -np.abs(np.pi-np.abs(phi1[:,np.newaxis] - phi2[:])) # GIVES MATRIX OF DIFFERENCE OF PHI VALUES       
     return (np.pi/(np.pi-2))*(1-np.cos(phi_d))
 
+# Generic distance on ring. Assuming distance is of the form (1-np.cos(\delta phi))^\beta/2.
+# User specifies eta, phi, then also beta   
 # Returns an unnormalized distance metric
 def _cdist_ring(X,Y,beta):
     phi1 = preproc(X)
@@ -203,14 +217,14 @@ def emd_Calc_Flow(ev0,ev1,M,maxIter=1000000):
     ev0norm = ev0[:]/ev0[:].sum()
     ev1norm = ev1[:]/ev1[:].sum()
 
-    cost, log, flow = emd2(ev0norm, ev1norm, M, numItermax=100000000,log=True, return_matrix=True)
+    cost, log  =  emd2(ev0norm, ev1norm, M, numItermax=100000000, log=True, return_matrix=True)
     
     # Should only return 0 when two events are identical. If returning 0 otherwise, problems in config                                                                                                                                       
     if cost==0:
         print(log['warning'])
 
     # returns the EMD between normalized events (e.g. multiply by event pT, eng, etc. to get dimensional value)                                                                                                                              
-    return cost, flow
+    return cost, log
     
 ########################################
 # EMD Visualization
