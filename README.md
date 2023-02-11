@@ -18,7 +18,7 @@ python -m pip install .
 In your Python environment run
 
 ```
-python -m pip install "git+https://github.com/caricesarotti/event_isotropy.git#egg=eventIsotropy"
+python -m pip install "eventIsotropy@git+https://github.com/caricesarotti/event_isotropy.git"
 ```
 
 ## Event Isotropy Code
